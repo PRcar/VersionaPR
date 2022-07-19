@@ -28,4 +28,31 @@ Configurando o redirecionamento de portas:![179813903-be572f3f-b1b6-4644-9db4-ad
 Ajustar DNS:
 Editar o arquivo hosts do Windows e do Linux, adicionando a linha: 127.0.0.1 elklabmonitoriacontainer
 Ajustar rede:
-Modo NAT nas configurações de rede da VM:
+Modo NAT nas configurações de rede da VM:![179814040-e833b703-e7dc-4aaa-9a9f-633fb6abf325](https://user-images.githubusercontent.com/109623573/179865760-fb83c47a-7aab-491e-81df-d57c8f2c53aa.png)
+
+Configurando a rede da maquina virtual para um cidr/24, sob protocolo IPv4 (ignorando o IPv6), utilizando um range classe A e configurando IP fixo:![179814138-d8f1e1a6-366f-4579-84e5-6712a6bde095](https://user-images.githubusercontent.com/109623573/179865938-c13f29e5-6296-41c9-9534-7c04f2be3c6b.png)
+
+Baixando Docker:
+
+sudo dnf update
+sudo dnf install yum-utils -y
+sudo yum-config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+sudo dnf update
+sudo dnf install docker-ce docker-ce-cli containerd.io
+sudo systemctl start docker
+sudo systemctl enable docker
+shutdown -r now
+systemctl status docker
+Adicionando o usuário ao grupo para não precisar usar o Docker como root:
+
+sudo groupadd docker
+sudo usermod -aG docker nome_do_usuário
+newgrp docker
+Instalar imagem ELK e subi-la para que toda vez que o sistema for iniciado, a imagem inicie junto:
+
+docker pull sebp/elk
+docker images --> para verificar a existência da imagem
+docker run -d --restart unless-stopped -p 5601:5601 -p 9200:9200 -p 5044:5044 -it id_imagem
+docker ps
+
+
