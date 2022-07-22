@@ -24,3 +24,30 @@
 # Mudar a rede das duas VM'S de modo NAT para BRIDGE no VMBox:
 ![180000178-457ad7bd-df74-424d-ab98-f1563503f5e3](https://user-images.githubusercontent.com/109623573/180090593-13465968-5d57-4201-bf80-59bd8616540b.png)
 
+# Criar relação de confiança entre as duas VMs:
+
+# VM1: 
+
+Criação das chaves:
+- ssh-keygen 
+- chaves armazenadas em /home/plinux/.ssh/
+
+![image](https://user-images.githubusercontent.com/109623573/180438841-d397822b-4b0e-45ff-992b-396757796872.png)
+
+- adicionar o IP da VM2 no arquivo hosts da VM1, para que haja conexão ssh via DNS na questão de relaçao de confiança:
+
+![image](https://user-images.githubusercontent.com/109623573/180439483-0dcf6ffe-6db6-4e25-a72a-4547befa24fd.png)
+
+
+# VM2:
+
+- Adicionando o IP da VM1 no arquivo hosts da VM2, para que haja conexão via DNS na questão de relação de confiança e importação de chave: 
+
+![image](https://user-images.githubusercontent.com/109623573/180441933-19cef33d-26ac-4fe2-a87d-64e0a383d3d2.png)
+
+- importar a chave pública da VM1 para VM2, criando o arquivo authorized_keys para validação da chave com o comando:  scp id_rsa.pub plinux2@192.168.1.2:~/.ssh/authorized_keys
+
+- configurar as permissões do arquivo authentication_keys, para que seja gravável apenas pelo usuário Plinux2, porém execultável pelo usuário, com o comando: chmod  700 ~/.shh/authorized_keys
+
+![image](https://user-images.githubusercontent.com/109623573/180444231-a27b192d-ad85-4c2d-9928-e4db97521b3d.png)
+
